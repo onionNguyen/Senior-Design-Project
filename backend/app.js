@@ -1,5 +1,7 @@
 const express = require("express");
 const authRoutes = require("./routes/authRoutes");
+const countryRoutes = require("./routes/countryRoutes");
+const languageRoutes = require("./routes/languageRoutes");
 
 const app = express();
 require("dotenv").config();
@@ -14,6 +16,8 @@ app.use(
 );
 
 app.use(authRoutes);
+app.use(countryRoutes);
+app.use(languageRoutes);
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server is live on port 3000");

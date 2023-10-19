@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const db = require("../db");
+const queries = require("../query");
+const generateDatabaseDateTime = require("./util/date");
 
 const register = async (req, res) => {
   const {
@@ -17,13 +18,34 @@ const register = async (req, res) => {
 
   try {
     const encryptedPassword = bcrypt.hashSync(password, 8);
-    const country_result = await db.query(
-      'SELECT id FROM "uARexpert_test_schema_001".country WHERE name = $1',
+    const countryResult = await queries.selectOp(
+      "id",
+      "country",
+      ["name"],
       [country_name]
     );
-    country_id = country_result.rows[0].id;
-    const result = await db.query(
-      'INSERT INTO "uARexpert_test_schema_001".user (first_name, middle_name, last_name, mobile_phone, work_phone, home_phone, email, password, country_id, role_id, status_id, created_on, created_by, modified_on, modified_by, row_version) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) RETURNING id',
+    countryId = countryResult[0].id;
+
+    const userId = await queries.insertOp(
+      "user",
+      [
+        "first_name",
+        "middle_name",
+        "last_name",
+        "mobile_phone",
+        "work_phone",
+        "home_phone",
+        "email",
+        "password",
+        "country_id",
+        "role_id",
+        "status_id",
+        "created_on",
+        "created_by",
+        "modified_on",
+        "modified_by",
+        "row_version",
+      ],
       [
         first_name,
         middle_name ? middle_name : null,
@@ -33,7 +55,7 @@ const register = async (req, res) => {
         home_phone ? home_phone : null,
         email,
         encryptedPassword,
-        country_id,
+        countryId,
         1,
         1,
         generateDatabaseDateTime(new Date()),
@@ -43,7 +65,6 @@ const register = async (req, res) => {
         1,
       ]
     );
-    const userId = result.rows[0].ID;
     res.status(200).json({ message: "User registered successfully", userId });
   } catch (error) {
     console.error("Error registering user:", error);
@@ -55,11 +76,8 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const result = await db.query(
-      'SELECT * FROM "uARexpert_test_schema_001".user WHERE email = $1',
-      [email]
-    );
-    const user = result.rows[0];
+    const userResult = await queries.selectOp("*", "user", ["email"], [email]);
+    const user = userResult[0];
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -93,10 +111,6 @@ const login = async (req, res) => {
     console.error("Error logging in user:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-};
-
-const generateDatabaseDateTime = (date) => {
-  return date.toISOString().replace("T", " ").substring(0, 19);
 };
 
 module.exports = { register, login };
