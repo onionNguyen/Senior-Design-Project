@@ -1,0 +1,25 @@
+.form-container {
+    display: flex;
+  }
+  
+  .form-sub-container {
+    width: 50%;
+  }
+  
+
+.d-flex {
+  display: flex!important;
+  height: 100vh;
+}
+
+.center {
+  margin: 0 auto;
+  align-self: center;
+}
+  .button-ribbon {
+    background-color: gainsboro;
+  }
+
+  .spacing {
+    margin: 5px;
+  }
