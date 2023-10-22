@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const countryRoutes = require("./routes/countryRoutes");
 const languageRoutes = require("./routes/languageRoutes");
@@ -6,6 +7,7 @@ const languageRoutes = require("./routes/languageRoutes");
 const app = express();
 require("dotenv").config();
 
+app.use(cors());
 // parse requests of content-type - application/json
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
