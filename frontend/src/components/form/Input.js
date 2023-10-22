@@ -1,25 +1,15 @@
 import React from "react";
 import styles from "./Form.module.css";
 
-const Input = ({ label, type, name, value, onChange, required }) => {
-  const countryCodes = [
-    { code: "+1", country: "United States" },
-    { code: "+44", country: "United Kingdom" },
-    { code: "+61", country: "Australia" },
-    { code: "+49", country: "Germany" },
-    { code: "+33", country: "France" },
-    { code: "+81", country: "Japan" },
-    { code: "+86", country: "China" },
-    { code: "+91", country: "India" },
-    { code: "+52", country: "Mexico" },
-    { code: "+55", country: "Brazil" },
-    { code: "+1", country: "Canada" },
-    { code: "+7", country: "Russia" },
-    { code: "+82", country: "South Korea" },
-    { code: "+34", country: "Spain" },
-    { code: "+39", country: "Italy" },
-  ];
-
+const Input = ({
+  label,
+  type,
+  name,
+  value,
+  onChange,
+  required,
+  countryCodes,
+}) => {
   return (
     <>
       <label className={styles["display-block"]} htmlFor={name}>
@@ -37,9 +27,9 @@ const Input = ({ label, type, name, value, onChange, required }) => {
           <option value="" disabled hidden>
             Select an option
           </option>
-          {countryCodes.map((item, index) => (
-            <option key={index} value={item.code}>
-              {item.country} ({item.code})
+          {countryCodes.map((countryCode, index) => (
+            <option key={index} value={countryCode.code}>
+              {countryCode.name} ({countryCode.code})
             </option>
           ))}
         </select>

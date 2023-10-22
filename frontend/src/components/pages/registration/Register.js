@@ -1,26 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import Input from "../../form/Input";
 import styles from "./Register.module.css";
 import IndicatesRequired from "../../form/IndicatesRequired";
 import MessageRibbon from "../../form/MessageRibbon";
+import axios from "axios";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    middleName: "",
-    lastName: "",
+    first_name: "",
+    middle_name: "",
+    last_name: "",
     countryCode: "",
-    mobilePhone: "",
-    workPhone: "",
-    homePhone: "",
-    emailAddress: "",
+    mobile_phone: "",
+    work_phone: "",
+    home_phone: "",
+    email: "",
     password: "",
-    verifyPassword: "",
+    verify_password: "",
   });
 
   const [errorMessages, setErrorMessages] = useState([]);
+
+  const [countryCodes, setCountryCodes] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/countries")
+      .then((response) => {
+        setCountryCodes(response.data.countries);
+      })
+      .catch((error) => {
+        console.error("Error fetching country codes:", error);
+      });
+  }, []);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -45,27 +59,27 @@ const Register = () => {
     const errors = [];
 
     const fieldToLablesMap = {
-      firstName: "First name",
-      middleName: "Middle name",
-      lastName: "Last name",
+      first_name: "First name",
+      middle_name: "Middle name",
+      last_name: "Last name",
       countryCode: "Country code",
-      mobilePhone: "Mobile phone",
-      workPhone: "Work phone",
-      homePhone: "Home phone",
-      emailAddress: "Email address",
+      mobile_phone: "Mobile phone",
+      work_phone: "Work phone",
+      home_phone: "Home phone",
+      email: "Email address",
       password: "Password",
-      verifyPassword: "Verify password",
+      verify_password: "Verify password",
     };
 
     // Validation for required fields
     const requiredFields = [
-      "firstName",
-      "lastName",
+      "first_name",
+      "last_name",
       "countryCode",
-      "mobilePhone",
-      "emailAddress",
+      "mobile_phone",
+      "email",
       "password",
-      "verifyPassword",
+      "verify_password",
     ];
 
     requiredFields.forEach((field) => {
@@ -76,12 +90,12 @@ const Register = () => {
 
     // Validation for field lengths
     const fieldsToCheckLength = [
-      "firstName",
-      "middleName",
-      "lastName",
-      "emailAddress",
+      "first_name",
+      "middle_name",
+      "last_name",
+      "email",
       "password",
-      "verifyPassword",
+      "verify_password",
     ];
     fieldsToCheckLength.forEach((field) => {
       if (formData[field] && formData[field].length > 50) {
@@ -92,7 +106,7 @@ const Register = () => {
     });
 
     // Validation for phone numbers (mobile, work, home)
-    const phoneFields = ["mobilePhone", "workPhone", "homePhone"];
+    const phoneFields = ["mobile_phone", "work_phone", "home_phone"];
     phoneFields.forEach((field) => {
       if (
         formData[field] &&
@@ -105,12 +119,12 @@ const Register = () => {
     });
 
     // Validation for email
-    if (formData.emailAddress && !isValidEmail(formData.emailAddress)) {
+    if (formData.email && !isValidEmail(formData.email)) {
       errors.push("Invalid email address.");
     }
 
-    // Validation for password and verifyPassword
-    if (formData.password !== formData.verifyPassword) {
+    // Validation for password and verify_password
+    if (formData.password !== formData.verify_password) {
       errors.push("Passwords do not match.");
     }
 
@@ -119,22 +133,21 @@ const Register = () => {
       sessionStorage.setItem(
         "registrationData",
         JSON.stringify({
-          firstName: formData.firstName,
-          password: formData.password,
+          formData,
         })
       );
       setErrorMessages([]);
       setFormData({
-        firstName: "",
-        middleName: "",
-        lastName: "",
+        first_name: "",
+        middle_name: "",
+        last_name: "",
         countryCode: "",
-        mobilePhone: "",
-        workPhone: "",
-        homePhone: "",
-        emailAddress: "",
+        mobile_phone: "",
+        work_phone: "",
+        home_phone: "",
+        email: "",
         password: "",
-        verifyPassword: "",
+        verify_password: "",
       });
     } else {
       setErrorMessages(errors);
@@ -152,32 +165,32 @@ const Register = () => {
             <Input
               label={"First Name"}
               type={"text"}
-              name={"firstName"}
-              value={formData.firstName}
+              name={"first_name"}
+              value={formData.first_name}
               onChange={handleInputChange}
               required={true}
             />
             <Input
               label={"Last Name"}
               type={"text"}
-              name={"lastName"}
-              value={formData.lastName}
+              name={"last_name"}
+              value={formData.last_name}
               onChange={handleInputChange}
               required={true}
             />
             <Input
               label={"Mobile Phone"}
               type={"text"}
-              name={"mobilePhone"}
-              value={formData.mobilePhone}
+              name={"mobile_phone"}
+              value={formData.mobile_phone}
               onChange={handleInputChange}
               required={true}
             />
             <Input
               label={"Home Phone"}
               type={"text"}
-              name={"homePhone"}
-              value={formData.homePhone}
+              name={"home_phone"}
+              value={formData.home_phone}
               onChange={handleInputChange}
               required={false}
             />
@@ -194,8 +207,8 @@ const Register = () => {
             <Input
               label={"Middle Name"}
               type={"text"}
-              name={"middleName"}
-              value={formData.middleName}
+              name={"middle_name"}
+              value={formData.middle_name}
               onChange={handleInputChange}
               required={false}
             />
@@ -206,28 +219,29 @@ const Register = () => {
               value={formData.countryCode}
               onChange={handleInputChange}
               required={true}
+              countryCodes={countryCodes}
             />
             <Input
               label={"Work Phone"}
               type={"text"}
-              name={"workPhone"}
-              value={formData.workPhone}
+              name={"work_phone"}
+              value={formData.work_phone}
               onChange={handleInputChange}
               required={false}
             />
             <Input
               label={"Email Address"}
               type={"email"}
-              name={"emailAddress"}
-              value={formData.emailAddress}
+              name={"email"}
+              value={formData.email}
               onChange={handleInputChange}
               required={true}
             />
             <Input
               label={"Verify Password"}
               type={"password"}
-              name={"verifyPassword"}
-              value={formData.verifyPassword}
+              name={"verify_password"}
+              value={formData.verify_password}
               onChange={handleInputChange}
               required={true}
             />
