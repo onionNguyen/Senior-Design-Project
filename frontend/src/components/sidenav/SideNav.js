@@ -6,13 +6,19 @@ const SideNav = (props) => {
     <div className={styles["sidenav"]}>
       <ul class="list-group">
         <li class="list-group-item">
-          <u>Edit User Profile</u>
+          <u>
+            <a href="http://localhost:3000/profile/edit">Edit User Profile</a>
+          </u>
         </li>
         <li class="list-group-item">
-          <u>Remote Viewing</u>
+          <u>
+            <a href="http://localhost:3000/remote-viewing">Remote Viewing</a>
+          </u>
         </li>
         <li class="list-group-item">
-          <u>Calendar</u>
+          <u>
+            <a href="http://localhost:3000/calendar">Calendar</a>
+          </u>
         </li>
       </ul>
     </div>
