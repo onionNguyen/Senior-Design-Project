@@ -1,0 +1,1143 @@
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET SESSION AUTHORIZATION 'postgres';
+
+SET default_tablespace = '';
+
+--
+-- TOC entry 197 (class 1259 OID 67019)
+-- Name: country; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."country" (
+    "id" integer NOT NULL,
+    "name" character varying(100) NOT NULL,
+    "code" character varying(10) NOT NULL,
+    "iso_code_2" character(2) NOT NULL,
+    "iso_code_3" character(3) NOT NULL,
+    "sequence" integer NOT NULL,
+    "status_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 198 (class 1259 OID 67022)
+-- Name: country_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."country" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."country_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 199 (class 1259 OID 67024)
+-- Name: language; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."language" (
+    "id" integer NOT NULL,
+    "name" character varying(100) NOT NULL,
+    "iso_639_1_code" character(2),
+    "iso_639_2_code" character varying(10) NOT NULL,
+    "sequence" integer NOT NULL,
+    "status_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 200 (class 1259 OID 67027)
+-- Name: language_country; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."language_country" (
+    "id" bigint NOT NULL,
+    "language_id" integer NOT NULL,
+    "country_id" integer NOT NULL,
+    "sequence" integer NOT NULL,
+    "status_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 201 (class 1259 OID 67030)
+-- Name: language_country_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."language_country" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."language_country_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 202 (class 1259 OID 67032)
+-- Name: language_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."language" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."language_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+--
+-- TOC entry 205 (class 1259 OID 67042)
+-- Name: privilege; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."privilege" (
+    "id" bigint NOT NULL,
+    "name" character varying(100) NOT NULL,
+    "description" character varying(200) NOT NULL,
+    "sequence" bigint NOT NULL,
+    "privilege_type_id" integer NOT NULL,
+    "status_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 206 (class 1259 OID 67045)
+-- Name: privilege_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."privilege" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."privilege_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 207 (class 1259 OID 67047)
+-- Name: privilege_type; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."privilege_type" (
+    "id" integer NOT NULL,
+    "name" character varying(100) NOT NULL,
+    "description" character varying(200) NOT NULL,
+    "sequence" integer NOT NULL,
+    "status_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 208 (class 1259 OID 67050)
+-- Name: privilege_type_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."privilege_type" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."privilege_type_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 209 (class 1259 OID 67052)
+-- Name: role; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."role" (
+    "id" integer NOT NULL,
+    "name" character varying(100) NOT NULL,
+    "description" character varying(200) NOT NULL,
+    "guid" character(32) NOT NULL,
+    "sequence" integer NOT NULL,
+    "status_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 210 (class 1259 OID 67055)
+-- Name: role_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."role" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."role_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 211 (class 1259 OID 67057)
+-- Name: role_privilege; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."role_privilege" (
+    "id" bigint NOT NULL,
+    "role_id" integer NOT NULL,
+    "privilege_id" bigint NOT NULL,
+    "status_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 212 (class 1259 OID 67060)
+-- Name: role_privilege_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."role_privilege" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."role_privilege_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 213 (class 1259 OID 67062)
+-- Name: state; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."state" (
+    "id" bigint NOT NULL,
+    "state" character varying(50) NOT NULL,
+    "abbreivation" character varying(3) NOT NULL,
+    "code" character varying(3) NOT NULL,
+    "sequence" bigint NOT NULL,
+    "country_id" integer NOT NULL,
+    "status_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 214 (class 1259 OID 67065)
+-- Name: state_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."state" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."state_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 215 (class 1259 OID 67067)
+-- Name: status; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."status" (
+    "id" smallint NOT NULL,
+    "name" character varying(100) NOT NULL,
+    "description" character varying(200) NOT NULL,
+    "guid" character(32) NOT NULL,
+    "sequence" smallint NOT NULL,
+    "status_type_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 216 (class 1259 OID 67070)
+-- Name: status_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."status" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."status_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 217 (class 1259 OID 67072)
+-- Name: status_type; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."status_type" (
+    "id" smallint NOT NULL,
+    "name" character varying(100) NOT NULL,
+    "description" character varying(200) NOT NULL,
+    "guid" character(32) NOT NULL,
+    "sequence" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 218 (class 1259 OID 67075)
+-- Name: status_type_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."status_type" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."status_type_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- TOC entry 219 (class 1259 OID 67077)
+-- Name: user; Type: TABLE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+CREATE TABLE "uARexpert_test_schema_001"."user" (
+    "id" bigint NOT NULL,
+    "first_name" character varying(50) NOT NULL,
+    "middle_name" character varying(50),
+    "last_name" character varying(50) NOT NULL,
+    "mobile_phone" character varying(14) NOT NULL,
+    "work_phone" character varying(14),
+    "home_phone" character varying(14),
+    "email" character varying(50) NOT NULL,
+    "password" character varying(50) NOT NULL,
+    "country_id" integer NOT NULL,
+    "role_id" integer NOT NULL,
+    "status_id" smallint NOT NULL,
+    "created_on" character varying(36) NOT NULL,
+    "created_by" bigint NOT NULL,
+    "modified_on" character varying(36) NOT NULL,
+    "modified_by" bigint NOT NULL,
+    "row_version" bigint NOT NULL
+);
+
+
+--
+-- TOC entry 220 (class 1259 OID 67080)
+-- Name: user_id_seq; Type: SEQUENCE; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE "uARexpert_test_schema_001"."user" ALTER COLUMN "id" ADD GENERATED ALWAYS AS IDENTITY (
+    SEQUENCE NAME "uARexpert_test_schema_001"."user_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+--
+-- TOC entry 2952 (class 0 OID 67019)
+-- Dependencies: 197
+-- Data for Name: country; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."country" ("id", "name", "code", "iso_code_2", "iso_code_3", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 'United States of America', '+1', 'US', 'USA', 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."country" ("id", "name", "code", "iso_code_2", "iso_code_3", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (2, 'Canada', '+1', 'CA', 'CAN', 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+
+--
+-- TOC entry 2954 (class 0 OID 67024)
+-- Dependencies: 199
+-- Data for Name: language; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."language" ("id", "name", "iso_639_1_code", "iso_639_2_code", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 'English', 'en', 'eng', 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."language" ("id", "name", "iso_639_1_code", "iso_639_2_code", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (2, 'Spanish', 'es', 'spa', 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."language" ("id", "name", "iso_639_1_code", "iso_639_2_code", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (3, 'French', 'fr', 'fre', 3, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+
+--
+-- TOC entry 2955 (class 0 OID 67027)
+-- Dependencies: 200
+-- Data for Name: language_country; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."language_country" ("id", "language_id", "country_id", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 1, 1, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."language_country" ("id", "language_id", "country_id", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (2, 2, 1, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."language_country" ("id", "language_id", "country_id", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (3, 1, 2, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."language_country" ("id", "language_id", "country_id", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (4, 3, 2, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+--
+-- TOC entry 2960 (class 0 OID 67042)
+-- Dependencies: 205
+-- Data for Name: privilege; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."privilege" ("id", "name", "description", "sequence", "privilege_type_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 'List User', 'List User', 1, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."privilege" ("id", "name", "description", "sequence", "privilege_type_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (2, 'Add User', 'Add User', 2, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."privilege" ("id", "name", "description", "sequence", "privilege_type_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (3, 'List Organization', 'List Organization', 3, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."privilege" ("id", "name", "description", "sequence", "privilege_type_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (4, 'Add Organization', 'Add Organization', 4, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+
+--
+-- TOC entry 2962 (class 0 OID 67047)
+-- Dependencies: 207
+-- Data for Name: privilege_type; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."privilege_type" ("id", "name", "description", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 'Page', 'Page', 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+
+--
+-- TOC entry 2964 (class 0 OID 67052)
+-- Dependencies: 209
+-- Data for Name: role; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."role" ("id", "name", "description", "guid", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 'Administrator', 'Administrator', '2E849EEC1EC240139F5D902FF618D067', 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."role" ("id", "name", "description", "guid", "sequence", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (2, 'Read Only', 'Read Only', '9105FFC8A5E240C3A48A9CD1564717FE', 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+
+--
+-- TOC entry 2966 (class 0 OID 67057)
+-- Dependencies: 211
+-- Data for Name: role_privilege; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."role_privilege" ("id", "role_id", "privilege_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 1, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."role_privilege" ("id", "role_id", "privilege_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (2, 1, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."role_privilege" ("id", "role_id", "privilege_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (3, 1, 3, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."role_privilege" ("id", "role_id", "privilege_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (4, 1, 4, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."role_privilege" ("id", "role_id", "privilege_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (5, 2, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."role_privilege" ("id", "role_id", "privilege_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (6, 2, 3, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+
+--
+-- TOC entry 2968 (class 0 OID 67062)
+-- Dependencies: 213
+-- Data for Name: state; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 'Alabama', 'AL', '01', 1, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (2, 'Alaska', 'AK', '02', 2, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (3, 'Arizona', 'AZ', '04', 3, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (4, 'Arkansas', 'AK', '05', 4, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (5, 'California', 'CA', '06', 5, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (6, 'Colorado', 'CO', '08', 6, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (7, 'Connecticut', 'CT', '09', 7, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (8, 'Delaware', 'DE', '10', 8, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (9, 'District of Columbia', 'DC', '11', 9, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (10, 'Florida', 'FL', '12', 10, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (11, 'Georgia', 'GA', '13', 11, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (12, 'Hawaii', 'HI', '15', 12, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (13, 'Idaho', 'ID', '16', 13, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (14, 'Illinois', 'IL', '17', 14, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (15, 'Indiana', 'IN', '18', 15, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (16, 'Iowa', 'IA', '19', 16, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (17, 'Kansas', 'KS', '20', 17, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (18, 'Kentucky', 'KY', '21', 18, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (19, 'Louisiana', 'LA', '22', 19, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (20, 'Maine', 'ME', '23', 20, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (21, 'Maryland', 'MD', '24', 21, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (22, 'Massachusetts', 'MA', '25', 22, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (23, 'Michigan', 'MI', '26', 23, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (24, 'Minnesota', 'MN', '27', 24, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (25, 'Mississippi', 'MS', '28', 25, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (26, 'Missouri', 'MO', '29', 26, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (27, 'Montana', 'MT', '30', 27, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (28, 'Nebraska', 'NE', '31', 28, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (29, 'Nevada', 'NV', '32', 29, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (30, 'New Hampshire', 'NH', '33', 30, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (31, 'New Jersey', 'NJ', '34', 31, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (32, 'New Mexico', 'NM', '35', 32, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (33, 'New York', 'NY', '36', 33, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (34, 'North Carolina', 'NC', '37', 34, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (35, 'North Dakota', 'ND', '38', 35, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (36, 'Ohio', 'OH', '39', 36, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (37, 'Oklahoma', 'OK', '40', 37, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (38, 'Oregon', 'OR', '41', 38, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (39, 'Pennsylvania', 'PA', '42', 39, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (40, 'Puerto Rico', 'PR', '72', 40, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (41, 'Rhode Island', 'RI', '44', 41, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (42, 'South Carolina', 'SC', '45', 42, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (43, 'South Dakota', 'SD', '46', 43, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (44, 'Tennessee', 'TN', '47', 44, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (45, 'Texas', 'TX', '48', 45, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (46, 'Utah', 'UT', '49', 46, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (47, 'Vermont', 'VT', '50', 47, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (48, 'Virginia', 'VA', '51', 48, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (49, 'Virgin Islands', 'VI', '78', 49, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (50, 'Washington', 'WA', '53', 50, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (51, 'West Virginia', 'WV', '54', 51, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (52, 'Wisconsin', 'WI', '55', 52, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (53, 'Wyoming', 'WY', '56', 53, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (54, 'Alberta', 'AL', '01', 1, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (55, 'British Columbia', 'BC', '02', 2, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (56, 'Manitoba', 'MA', '03', 3, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (57, 'New Brunswick', 'NB', '04', 4, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (58, 'Newfoundland and Labrador', 'NL', '05', 5, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (59, 'Northwest Territories', 'NT', '06', 6, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (60, 'Nova Scotia', 'NS', '07', 7, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (61, 'Nunavut', 'NU', '08', 8, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (62, 'Ontario', 'ON', '09', 9, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (63, 'Prince Edward Island', 'PI', '10', 10, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (64, 'Quebec', 'QC', '11', 11, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (65, 'Saskatchewan', 'SN', '12', 12, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."state" ("id", "state", "abbreivation", "code", "sequence", "country_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (66, 'Yukon', 'YK', '13', 13, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+
+--
+-- TOC entry 2970 (class 0 OID 67067)
+-- Dependencies: 215
+-- Data for Name: status; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."status" ("id", "name", "description", "guid", "sequence", "status_type_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 'Active', 'Active status', 'DE5B301D3B9C4515A0818F1C713ACE22', 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."status" ("id", "name", "description", "guid", "sequence", "status_type_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (2, 'Inactive', 'Inactive status', '376A43F5453740FCAB499FBCB52B0F91', 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+
+--
+-- TOC entry 2972 (class 0 OID 67072)
+-- Dependencies: 217
+-- Data for Name: status_type; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."status_type" ("id", "name", "description", "guid", "sequence", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 'User', 'Status Types for Users', 'AF3483E209D149D3A90AC51E22F9A1FF', 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+
+--
+-- TOC entry 2974 (class 0 OID 67077)
+-- Dependencies: 219
+-- Data for Name: user; Type: TABLE DATA; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+INSERT INTO "uARexpert_test_schema_001"."user" ("id", "first_name", "middle_name", "last_name", "mobile_phone", "work_phone", "home_phone", "email", "password", "country_id", "role_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (1, 'John', NULL, 'Doe', '+15127778888', NULL, NULL, 'John.Doe@gmail.com', 'password', 1, 1, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+INSERT INTO "uARexpert_test_schema_001"."user" ("id", "first_name", "middle_name", "last_name", "mobile_phone", "work_phone", "home_phone", "email", "password", "country_id", "role_id", "status_id", "created_on", "created_by", "modified_on", "modified_by", "row_version") OVERRIDING SYSTEM VALUE VALUES (2, 'Jane', NULL, 'Smith', '+15127778888', NULL, NULL, 'Jane.Smith@gmail.com', 'password', 1, 2, 1, '2022-10-21 08:29:32', 1, '2022-10-21 08:29:32', 1, 1);
+
+--
+-- TOC entry 2983 (class 0 OID 0)
+-- Dependencies: 198
+-- Name: country_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."country_id_seq"', 2, true);
+
+
+--
+-- TOC entry 2984 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: language_country_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."language_country_id_seq"', 4, true);
+
+
+--
+-- TOC entry 2985 (class 0 OID 0)
+-- Dependencies: 202
+-- Name: language_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."language_id_seq"', 3, true);
+
+--
+-- TOC entry 2987 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: privilege_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."privilege_id_seq"', 4, true);
+
+
+--
+-- TOC entry 2988 (class 0 OID 0)
+-- Dependencies: 208
+-- Name: privilege_type_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."privilege_type_id_seq"', 1, true);
+
+
+--
+-- TOC entry 2989 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: role_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."role_id_seq"', 2, true);
+
+
+--
+-- TOC entry 2990 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: role_privilege_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."role_privilege_id_seq"', 6, true);
+
+
+--
+-- TOC entry 2991 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: state_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."state_id_seq"', 66, true);
+
+
+--
+-- TOC entry 2992 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: status_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."status_id_seq"', 2, true);
+
+
+--
+-- TOC entry 2993 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: status_type_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."status_type_id_seq"', 1, true);
+
+
+--
+-- TOC entry 2994 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: user_id_seq; Type: SEQUENCE SET; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"uARexpert_test_schema_001"."user_id_seq"', 2, true);
+
+
+--
+-- TOC entry 2758 (class 2606 OID 67086)
+-- Name: country pk_country; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."country"
+    ADD CONSTRAINT "pk_country" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2760 (class 2606 OID 67088)
+-- Name: language pk_language; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language"
+    ADD CONSTRAINT "pk_language" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2762 (class 2606 OID 67090)
+-- Name: language_country pk_language_country; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language_country"
+    ADD CONSTRAINT "pk_language_country" PRIMARY KEY ("id");
+
+--
+-- TOC entry 2766 (class 2606 OID 67094)
+-- Name: privilege pk_privilege; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."privilege"
+    ADD CONSTRAINT "pk_privilege" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2768 (class 2606 OID 67096)
+-- Name: privilege_type pk_privilege_type; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."privilege_type"
+    ADD CONSTRAINT "pk_privilege_type" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2770 (class 2606 OID 67098)
+-- Name: role pk_role; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role"
+    ADD CONSTRAINT "pk_role" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2772 (class 2606 OID 67100)
+-- Name: role_privilege pk_role_privilege; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role_privilege"
+    ADD CONSTRAINT "pk_role_privilege" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2774 (class 2606 OID 67102)
+-- Name: state pk_state; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."state"
+    ADD CONSTRAINT "pk_state" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2776 (class 2606 OID 67104)
+-- Name: status pk_status; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."status"
+    ADD CONSTRAINT "pk_status" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2778 (class 2606 OID 67106)
+-- Name: status_type pk_status_type_id; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."status_type"
+    ADD CONSTRAINT "pk_status_type_id" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2780 (class 2606 OID 67108)
+-- Name: user pk_user; Type: CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."user"
+    ADD CONSTRAINT "pk_user" PRIMARY KEY ("id");
+
+
+--
+-- TOC entry 2781 (class 2606 OID 67109)
+-- Name: country fk_country_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."country"
+    ADD CONSTRAINT "fk_country_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2782 (class 2606 OID 67114)
+-- Name: country fk_country_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."country"
+    ADD CONSTRAINT "fk_country_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2783 (class 2606 OID 67119)
+-- Name: country fk_country_status_id_status_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."country"
+    ADD CONSTRAINT "fk_country_status_id_status_id" FOREIGN KEY ("status_id") REFERENCES "uARexpert_test_schema_001"."status"("id");
+
+
+--
+-- TOC entry 2787 (class 2606 OID 67124)
+-- Name: language_country fk_language_country_country_id_country_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language_country"
+    ADD CONSTRAINT "fk_language_country_country_id_country_id" FOREIGN KEY ("country_id") REFERENCES "uARexpert_test_schema_001"."country"("id");
+
+
+--
+-- TOC entry 2788 (class 2606 OID 67129)
+-- Name: language_country fk_language_country_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language_country"
+    ADD CONSTRAINT "fk_language_country_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2789 (class 2606 OID 67134)
+-- Name: language_country fk_language_country_language_id_language_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language_country"
+    ADD CONSTRAINT "fk_language_country_language_id_language_id" FOREIGN KEY ("language_id") REFERENCES "uARexpert_test_schema_001"."language"("id");
+
+
+--
+-- TOC entry 2790 (class 2606 OID 67139)
+-- Name: language_country fk_language_country_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language_country"
+    ADD CONSTRAINT "fk_language_country_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2791 (class 2606 OID 67144)
+-- Name: language_country fk_language_country_status_id_status_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language_country"
+    ADD CONSTRAINT "fk_language_country_status_id_status_id" FOREIGN KEY ("status_id") REFERENCES "uARexpert_test_schema_001"."status"("id");
+
+
+--
+-- TOC entry 2784 (class 2606 OID 67149)
+-- Name: language fk_language_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language"
+    ADD CONSTRAINT "fk_language_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2785 (class 2606 OID 67154)
+-- Name: language fk_language_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language"
+    ADD CONSTRAINT "fk_language_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2786 (class 2606 OID 67159)
+-- Name: language fk_language_status_id_status_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."language"
+    ADD CONSTRAINT "fk_language_status_id_status_id" FOREIGN KEY ("status_id") REFERENCES "uARexpert_test_schema_001"."status"("id");
+
+
+--
+-- TOC entry 2797 (class 2606 OID 67189)
+-- Name: privilege fk_privilege_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."privilege"
+    ADD CONSTRAINT "fk_privilege_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2798 (class 2606 OID 67194)
+-- Name: privilege fk_privilege_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."privilege"
+    ADD CONSTRAINT "fk_privilege_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2799 (class 2606 OID 67199)
+-- Name: privilege fk_privilege_privilege_type_id_privilege_type_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."privilege"
+    ADD CONSTRAINT "fk_privilege_privilege_type_id_privilege_type_id" FOREIGN KEY ("privilege_type_id") REFERENCES "uARexpert_test_schema_001"."privilege_type"("id");
+
+
+--
+-- TOC entry 2800 (class 2606 OID 67204)
+-- Name: privilege fk_privilege_status_id_status_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."privilege"
+    ADD CONSTRAINT "fk_privilege_status_id_status_id" FOREIGN KEY ("status_id") REFERENCES "uARexpert_test_schema_001"."status"("id");
+
+
+--
+-- TOC entry 2801 (class 2606 OID 67209)
+-- Name: privilege_type fk_privilege_type_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."privilege_type"
+    ADD CONSTRAINT "fk_privilege_type_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2802 (class 2606 OID 67214)
+-- Name: privilege_type fk_privilege_type_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."privilege_type"
+    ADD CONSTRAINT "fk_privilege_type_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2803 (class 2606 OID 67219)
+-- Name: privilege_type fk_privilege_type_status_id_status_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."privilege_type"
+    ADD CONSTRAINT "fk_privilege_type_status_id_status_id" FOREIGN KEY ("status_id") REFERENCES "uARexpert_test_schema_001"."status"("id");
+
+
+--
+-- TOC entry 2804 (class 2606 OID 67224)
+-- Name: role fk_role_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role"
+    ADD CONSTRAINT "fk_role_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2805 (class 2606 OID 67229)
+-- Name: role fk_role_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role"
+    ADD CONSTRAINT "fk_role_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2807 (class 2606 OID 67234)
+-- Name: role_privilege fk_role_privilege_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role_privilege"
+    ADD CONSTRAINT "fk_role_privilege_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2808 (class 2606 OID 67239)
+-- Name: role_privilege fk_role_privilege_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role_privilege"
+    ADD CONSTRAINT "fk_role_privilege_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2809 (class 2606 OID 67244)
+-- Name: role_privilege fk_role_privilege_privilege_id_privilege_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role_privilege"
+    ADD CONSTRAINT "fk_role_privilege_privilege_id_privilege_id" FOREIGN KEY ("privilege_id") REFERENCES "uARexpert_test_schema_001"."privilege"("id");
+
+
+--
+-- TOC entry 2810 (class 2606 OID 67249)
+-- Name: role_privilege fk_role_privilege_role_id_role_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role_privilege"
+    ADD CONSTRAINT "fk_role_privilege_role_id_role_id" FOREIGN KEY ("role_id") REFERENCES "uARexpert_test_schema_001"."role"("id");
+
+
+--
+-- TOC entry 2811 (class 2606 OID 67254)
+-- Name: role_privilege fk_role_privilege_status_id_status_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role_privilege"
+    ADD CONSTRAINT "fk_role_privilege_status_id_status_id" FOREIGN KEY ("status_id") REFERENCES "uARexpert_test_schema_001"."status"("id");
+
+
+--
+-- TOC entry 2806 (class 2606 OID 67259)
+-- Name: role fk_role_status_id_status_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."role"
+    ADD CONSTRAINT "fk_role_status_id_status_id" FOREIGN KEY ("status_id") REFERENCES "uARexpert_test_schema_001"."status"("id");
+
+
+--
+-- TOC entry 2812 (class 2606 OID 67264)
+-- Name: state fk_state_country_id_country_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."state"
+    ADD CONSTRAINT "fk_state_country_id_country_id" FOREIGN KEY ("country_id") REFERENCES "uARexpert_test_schema_001"."country"("id");
+
+
+--
+-- TOC entry 2813 (class 2606 OID 67269)
+-- Name: state fk_state_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."state"
+    ADD CONSTRAINT "fk_state_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2814 (class 2606 OID 67274)
+-- Name: state fk_state_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."state"
+    ADD CONSTRAINT "fk_state_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2815 (class 2606 OID 67279)
+-- Name: state fk_state_status_id_status_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."state"
+    ADD CONSTRAINT "fk_state_status_id_status_id" FOREIGN KEY ("status_id") REFERENCES "uARexpert_test_schema_001"."status"("id");
+
+
+--
+-- TOC entry 2816 (class 2606 OID 67284)
+-- Name: status fk_status_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."status"
+    ADD CONSTRAINT "fk_status_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2817 (class 2606 OID 67289)
+-- Name: status fk_status_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."status"
+    ADD CONSTRAINT "fk_status_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2818 (class 2606 OID 67294)
+-- Name: status fk_status_status_type_id_status_type_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."status"
+    ADD CONSTRAINT "fk_status_status_type_id_status_type_id" FOREIGN KEY ("status_type_id") REFERENCES "uARexpert_test_schema_001"."status_type"("id");
+
+
+--
+-- TOC entry 2819 (class 2606 OID 67299)
+-- Name: status_type fk_status_type_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."status_type"
+    ADD CONSTRAINT "fk_status_type_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2820 (class 2606 OID 67304)
+-- Name: status_type fk_status_type_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."status_type"
+    ADD CONSTRAINT "fk_status_type_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2821 (class 2606 OID 67309)
+-- Name: user fk_user_country_id_country_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."user"
+    ADD CONSTRAINT "fk_user_country_id_country_id" FOREIGN KEY ("country_id") REFERENCES "uARexpert_test_schema_001"."country"("id");
+
+
+--
+-- TOC entry 2822 (class 2606 OID 67314)
+-- Name: user fk_user_created_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."user"
+    ADD CONSTRAINT "fk_user_created_by_user_id" FOREIGN KEY ("created_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2823 (class 2606 OID 67319)
+-- Name: user fk_user_modified_by_user_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."user"
+    ADD CONSTRAINT "fk_user_modified_by_user_id" FOREIGN KEY ("modified_by") REFERENCES "uARexpert_test_schema_001"."user"("id");
+
+
+--
+-- TOC entry 2824 (class 2606 OID 67349)
+-- Name: user fk_user_role_id_role_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."user"
+    ADD CONSTRAINT "fk_user_role_id_role_id" FOREIGN KEY ("role_id") REFERENCES "uARexpert_test_schema_001"."role"("id");
+
+
+--
+-- TOC entry 2825 (class 2606 OID 67354)
+-- Name: user fk_user_status_id_status_id; Type: FK CONSTRAINT; Schema: uARexpert_test_schema_001; Owner: postgres
+--
+
+ALTER TABLE ONLY "uARexpert_test_schema_001"."user"
+    ADD CONSTRAINT "fk_user_status_id_status_id" FOREIGN KEY ("status_id") REFERENCES "uARexpert_test_schema_001"."status"("id");
+
+
+-- Completed on 2023-09-30 17:44:14
+
+--
+-- PostgreSQL database dump complete
+--
+
+
