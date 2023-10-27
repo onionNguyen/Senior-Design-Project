@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
-import SideNav from "../../sidenav/SideNav";
 import Input from "../../form/Input";
 import styles from "./Register.module.css";
 import IndicatesRequired from "../../form/IndicatesRequired";
@@ -164,7 +163,6 @@ const Register = () => {
   return (
     <div>
       <Header />
-       <SideNav />
       <MessageRibbon messageList={errorMessages} />
       <IndicatesRequired />
       <form onSubmit={handleSubmit} noValidate>
