@@ -6,9 +6,10 @@ const {
   updateLanguageById,
   deleteLanguageById,
 } = require("../controllers/language");
+const { validateToken } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
-router.get("/languages", getLangauges);
+router.get("/languages", validateToken, getLangauges);
 router.post("/languages", insertLanguage);
 router.get("/languages/:id", getLanguageById);
 router.put("/languages/:id", updateLanguageById);

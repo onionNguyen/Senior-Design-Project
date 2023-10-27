@@ -28,7 +28,7 @@ const Input = ({
             Select an option
           </option>
           {countryCodes.map((countryCode, index) => (
-            <option key={index} value={countryCode.code}>
+            <option key={index} value={countryCode.name}>
               {countryCode.name} ({countryCode.code})
             </option>
           ))}

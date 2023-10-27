@@ -1,14 +1,48 @@
-import Footer from "./components/footer/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EditProfile from "./components/pages/edit-user-profile/EditProfile";
 import Login from "./components/pages/login/Login";
 import Home from "./components/pages/home/Home";
 import Register from "./components/pages/registration/Register";
+import { AuthContext } from "./helpers/AuthContext";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import NotFound from "./components/pages/error/NotFound";
+import Calendar from "./components/pages/calendar/Calendar";
+import RemoteViewing from "./components/pages/remote-viewing/RemoteViewing";
 
 function App() {
+  const [authState, setAuthState] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/auth", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState(false);
+        } else {
+          setAuthState(true);
+        }
+      });
+  }, []);
+
   return (
-    <div>
-      <Login />
-    </div>
+    <AuthContext.Provider value={{ authState, setAuthState }}>
+      <Router>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+          <Route path="/register" exact element={<Register />} />
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/profile/edit" exact element={<EditProfile />} />
+          <Route path="/calendar" exact element={<Calendar />} />
+          <Route path="/remote-viewing" exact element={<RemoteViewing />} />
+          <Route path="*" exact element={<NotFound />} />
+        </Routes>
+      </Router>
+    </AuthContext.Provider>
   );
 }
 

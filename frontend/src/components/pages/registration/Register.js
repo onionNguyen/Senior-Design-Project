@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import Input from "../../form/Input";
 import styles from "./Register.module.css";
 import IndicatesRequired from "../../form/IndicatesRequired";
 import MessageRibbon from "../../form/MessageRibbon";
-import axios from "axios";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     first_name: "",
     middle_name: "",
     last_name: "",
-    countryCode: "",
+    country_name: "",
     mobile_phone: "",
     work_phone: "",
     home_phone: "",
@@ -62,7 +65,7 @@ const Register = () => {
       first_name: "First name",
       middle_name: "Middle name",
       last_name: "Last name",
-      countryCode: "Country code",
+      country_name: "Country code",
       mobile_phone: "Mobile phone",
       work_phone: "Work phone",
       home_phone: "Home phone",
@@ -75,7 +78,7 @@ const Register = () => {
     const requiredFields = [
       "first_name",
       "last_name",
-      "countryCode",
+      "country_name",
       "mobile_phone",
       "email",
       "password",
@@ -130,18 +133,21 @@ const Register = () => {
 
     console.log(errors);
     if (errors.length === 0) {
-      sessionStorage.setItem(
-        "registrationData",
-        JSON.stringify({
-          formData,
+      axios
+        .post("http://localhost:5000/register", formData)
+        .then((response) => {
+          console.log(response.data);
+          navigate("/login");
         })
-      );
+        .catch((error) => {
+          console.error("Error registering user:", error);
+        });
       setErrorMessages([]);
       setFormData({
         first_name: "",
         middle_name: "",
         last_name: "",
-        countryCode: "",
+        country_name: "",
         mobile_phone: "",
         work_phone: "",
         home_phone: "",
@@ -215,8 +221,8 @@ const Register = () => {
             <Input
               label={"Country Code"}
               type={"select"}
-              name={"countryCode"}
-              value={formData.countryCode}
+              name={"country_name"}
+              value={formData.country_name}
               onChange={handleInputChange}
               required={true}
               countryCodes={countryCodes}
@@ -249,7 +255,7 @@ const Register = () => {
         </div>
         <div className={styles["button-ribbon"]}>
           <button>Register</button>
-          <button>Cancel</button>
+          <a href="http://localhost:3000/login">Need to login?</a>
         </div>
       </form>
       <Footer />

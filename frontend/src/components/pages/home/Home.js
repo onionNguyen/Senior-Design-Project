@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useContext } from "react";
 import SideNav from "../../sidenav/SideNav";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import styles from "./Home.module.css";
+import { AuthContext } from "../../../helpers/AuthContext";
+import Unauthorized from "../error/Unauthorized";
 
 const Home = () => {
-  return (
+  const { authState } = useContext(AuthContext);
+
+  return authState ? (
     <div>
       <Header />
-      <SideNav>
-        <div className={styles["form-container"]}>
-          <div className={styles["form-sub-container"]}></div>
-        </div>
-        <div className={styles["button-ribbon"]}></div>
-      </SideNav>
+      <SideNav />
       <Footer />
     </div>
+  ) : (
+    <Unauthorized />
   );
 };
 

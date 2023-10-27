@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import Input from "../../form/Input";
 import styles from "./Login.module.css";
 import IndicatesRequired from "../../form/IndicatesRequired";
 import MessageRibbon from "../../form/MessageRibbon";
+import { AuthContext } from "../../../helpers/AuthContext";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const { setAuthState } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
-    emailAddress: "",
+    email: "",
     password: "",
   });
 
@@ -20,24 +27,71 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const isValidEmail = (email) => {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formData);
+
     const errors = [];
 
     const fieldToLablesMap = {
-      emailAddress: "Login Id",
+      email: "Email address",
       password: "Password",
     };
 
     // Validation for required fields
-    const requiredFields = ["emailAddress", "password"];
+    const requiredFields = ["email", "password"];
 
     requiredFields.forEach((field) => {
       if (!formData[field]) {
         errors.push(`${fieldToLablesMap[field]} is required.`);
       }
     });
+
+    // Validation for field lengths
+    const fieldsToCheckLength = ["email", "password"];
+    fieldsToCheckLength.forEach((field) => {
+      if (formData[field] && formData[field].length > 50) {
+        errors.push(
+          `${fieldToLablesMap[field]} must be 50 characters or less.`
+        );
+      }
+    });
+
+    // Validation for email
+    if (formData.email && !isValidEmail(formData.email)) {
+      errors.push("Invalid email address.");
+    }
+
+    console.log(errors);
+    if (errors.length === 0) {
+      axios
+        .post("http://localhost:5000/login", formData)
+        .then((response) => {
+          console.log(response.data);
+          if (!response.data.error) {
+            localStorage.setItem("accessToken", response.data.accessToken);
+            setAuthState(true);
+            setErrorMessages([]);
+            setFormData({
+              email: "",
+              password: "",
+            });
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          errors.push("Invalid email and password combination.");
+          setErrorMessages(errors);
+          console.error("Error registering user:", error);
+        });
+    } else {
+      setErrorMessages(errors);
+    }
   };
 
   return (
@@ -46,13 +100,13 @@ const Login = () => {
       <MessageRibbon messageList={errorMessages} />
       <IndicatesRequired />
       <form onSubmit={handleSubmit} noValidate>
-        <div className={`row ${styles["d-flex"]}`}>
-          <div className={`col-md-3 ${styles.center}`}>
+        <div className={styles["form-container"]}>
+          <div className={styles["form-sub-container"]}>
             <Input
-              label={"Login Id"}
+              label={"Email Address"}
               type={"email"}
-              name={"emailAddress"}
-              value={formData.emailAddress}
+              name={"email"}
+              value={formData.email}
               onChange={handleInputChange}
               required={true}
             />
@@ -64,12 +118,12 @@ const Login = () => {
               onChange={handleInputChange}
               required={true}
             />
-            <button>Register</button>
-            <div className={styles["form-sub-container"]}></div>
-            <button>Login</button>
           </div>
         </div>
-        <div className={styles["button-ribbon"]}></div>
+        <div className={styles["button-ribbon"]}>
+          <button>Login</button>
+          <a href="http://localhost:3000/register">Need to register?</a>
+        </div>
       </form>
       <Footer />
     </div>

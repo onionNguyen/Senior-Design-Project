@@ -105,7 +105,7 @@ const login = async (req, res) => {
         email: user.email,
       },
       message: "Login successful",
-      assessToken: token,
+      accessToken: token,
     });
   } catch (error) {
     console.error("Error logging in user:", error);
@@ -113,4 +113,8 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const auth = (req, res) => {
+  res.json(req.user);
+};
+
+module.exports = { register, login, auth };
