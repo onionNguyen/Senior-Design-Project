@@ -75,7 +75,12 @@ const Login = () => {
           console.log(response.data);
           if (!response.data.error) {
             localStorage.setItem("accessToken", response.data.accessToken);
-            setAuthState(true);
+            setAuthState({
+              id: response.data.id,
+              name: response.data.name,
+              email: response.data.email,
+              status: true,
+            });
             setErrorMessages([]);
             setFormData({
               email: "",

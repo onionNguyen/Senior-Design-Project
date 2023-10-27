@@ -26,7 +26,7 @@ function App() {
         },
       })
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
         if (response.data.error) {
           setAuthState({
             ...authState,
@@ -41,7 +41,7 @@ function App() {
           });
         }
       });
-  }, []);
+  }, [authState]);
 
   return (
     <AuthContext.Provider value={{ authState, setAuthState }}>

@@ -11,7 +11,12 @@ const Header = () => {
 
   const logout = () => {
     localStorage.removeItem("accessToken");
-    setAuthState(false);
+    setAuthState({
+      id: 0,
+      name: "",
+      email: "",
+      status: false,
+    });
     navigate("/login");
   };
 
@@ -23,8 +28,8 @@ const Header = () => {
           <img src={mainLogo} alt="Logo" />
         </div>
       </div>
-      {authState && <h2>{authState.name}</h2>}
-      {authState && <button onClick={logout}>Logout</button>}
+      {authState.status && <h2>{authState.name}</h2>}
+      {authState.status && <button onClick={logout}>Logout</button>}
     </div>
   );
 };
