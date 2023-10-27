@@ -90,7 +90,9 @@ const login = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: user.ID,
+        id: user.id,
+        name: user.first_name,
+        email: user.email,
       },
       process.env.API_SECRET,
       {

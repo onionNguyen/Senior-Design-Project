@@ -23,6 +23,7 @@ const Header = () => {
           <img src={mainLogo} alt="Logo" />
         </div>
       </div>
+      {authState && <h2>{authState.name}</h2>}
       {authState && <button onClick={logout}>Logout</button>}
     </div>
   );

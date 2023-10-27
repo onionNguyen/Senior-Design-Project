@@ -11,7 +11,12 @@ import Calendar from "./components/pages/calendar/Calendar";
 import RemoteViewing from "./components/pages/remote-viewing/RemoteViewing";
 
 function App() {
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState({
+    id: 0,
+    name: "",
+    email: "",
+    status: false,
+  });
 
   useEffect(() => {
     axios
@@ -21,10 +26,19 @@ function App() {
         },
       })
       .then((response) => {
+        console.log(response);
         if (response.data.error) {
-          setAuthState(false);
+          setAuthState({
+            ...authState,
+            status: false,
+          });
         } else {
-          setAuthState(true);
+          setAuthState({
+            id: response.data.id,
+            name: response.data.name,
+            email: response.data.email,
+            status: true,
+          });
         }
       });
   }, []);
